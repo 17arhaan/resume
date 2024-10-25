@@ -160,55 +160,58 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://unpkg.com/github-calendar/dist/github-calendar.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // GitHub Activity Chart
-            const ctx = document.getElementById('gitProgressChart').getContext('2d');
-            const gitProgressChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-                    datasets: [{
-                        label: 'Commits per Month',
-                        data: [1, 1, 1, 5, 14, 47, 58, 161, 57, 100, 0, 0],
-                        borderColor: '#00aaff',
-                        backgroundColor: 'rgba(0, 170, 255, 0.2)',
-                        borderWidth: 2,
-                        pointBackgroundColor: '#ffffff',
-                        pointBorderColor: '#00aaff',
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            max: 70, // Set a fixed maximum value for the y-axis to prevent it from extending too much
-                            ticks: {
-                                color: '#ffffff'
+            document.addEventListener('DOMContentLoaded', function () {
+                const commitData = [1, 1, 1, 5, 14, 57, 68, 41, 27, 100, 0, 0]; // Data for commits per month
+                const maxCommit = Math.max(...commitData);
+                const yMax = maxCommit + 10; // Add a buffer to max value
+
+                const ctx = document.getElementById('gitProgressChart').getContext('2d');
+                const gitProgressChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                        datasets: [{
+                            label: 'Commits per Month',
+                            data: commitData,
+                            borderColor: '#00aaff',
+                            backgroundColor: 'rgba(0, 170, 255, 0.2)',
+                            borderWidth: 2,
+                            pointBackgroundColor: '#ffffff',
+                            pointBorderColor: '#00aaff',
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                suggestedMax: yMax, // Use calculated max value
+                                ticks: {
+                                    color: '#ffffff'
+                                },
+                                grid: {
+                                    color: 'rgba(255, 255, 255, 0.1)'
+                                }
                             },
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.1)'
+                            x: {
+                                ticks: {
+                                    color: '#ffffff'
+                                },
+                                grid: {
+                                    color: 'rgba(255, 255, 255, 0.1)'
+                                }
                             }
                         },
-                        x: {
-                            ticks: {
-                                color: '#ffffff'
-                            },
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.1)'
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            labels: {
-                                color: '#ffffff'
+                        plugins: {
+                            legend: {
+                                labels: {
+                                    color: '#ffffff'
+                                }
                             }
                         }
                     }
-                }
-            });
+                });
 
             // GitHub Calendar Integration
             GitHubCalendar(".github-calendar", "17Arhaan", {
